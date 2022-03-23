@@ -2066,6 +2066,7 @@ window.Echo["private"]("notifications.".concat(Id)).notification(function (e) {
   var count = Number($('#unreadNotificationsCount').text());
   count++;
   $('#unreadNotificationsCount').text(count);
+  $("#notification-status").html('<span class="badge badge-danger notification-status"> </span>');
   $('#notification-div').prepend("\n        <a href=\"".concat(e.url, "\" class=\"dropdown-item unread\">\n            <span>").concat(e.title, "</span>\n            <small class=\"float-right text-muted time\">").concat(e.time, "</small>\n            <p class=\"pl-1 pr-1\">").concat(e.body, "</p>\n        </a>\n        <div class=\"dropdown-divider m-0\" style=\"border-top: 2px solid white !important\"></div>\n    "));
 
   Command: toastr["info"]("".concat(e.title));

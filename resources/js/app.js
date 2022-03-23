@@ -5,6 +5,8 @@ window.Echo.private(`notifications.${Id}`).notification(function(e){
     count++;
     $('#unreadNotificationsCount').text(count);
 
+    $("#notification-status").html('<span class="badge badge-danger notification-status"> </span>');
+
     $('#notification-div').prepend(`
         <a href="${e.url}" class="dropdown-item unread">
             <span>${e.title}</span>

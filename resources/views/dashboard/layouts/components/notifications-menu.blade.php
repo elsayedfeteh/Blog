@@ -2,9 +2,11 @@
     <a class="nav-link top-nav" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
         aria-expanded="false">
         <i class="ti-bell"></i>
-        @if ($unreadNotificationsCount > 0)
-            <span class="badge badge-danger notification-status"> </span>
-        @endif
+        <div id="notification-status">
+            @if ($unreadNotificationsCount > 0)
+                <span class="badge badge-danger notification-status"> </span>
+            @endif
+        </div>
     </a>
     <div class="dropdown-menu dropdown-menu-right dropdown-big dropdown-notifications pb-0">
         <div class="dropdown-header notifications">
