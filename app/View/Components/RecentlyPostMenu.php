@@ -25,6 +25,6 @@ class RecentlyPostMenu extends Component
      */
     public function render()
     {
-        return view('components.recently-post-menu');
+        return view('website.layouts.components.recently-post-menu');
     }
 }

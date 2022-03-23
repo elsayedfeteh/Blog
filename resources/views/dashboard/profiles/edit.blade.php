@@ -102,7 +102,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">{{__('Add Profile')}}</button>
+                        <button type="submit" class="btn btn-primary">{{__('Update Profile')}}</button>
                         <a href="{{ route('profile.index') }}" class="btn btn-default">{{__('Back')}}</a>
                     </form>
                 </div>

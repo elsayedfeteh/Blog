@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SearchRequest;
 use App\Models\Category;
 use App\Models\Guest;
 use App\Models\Post;
@@ -26,33 +27,58 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        if (Auth::user()->type != 'admin' and Auth::user() != $post->user) {
+        if (Auth::user()) {
+            if (Auth::user()->type != 'admin' and Auth::user() != $post->user) {
+                $post->increment('total_views');
+            }
+        } else {
             $post->increment('total_views');
         }
-
         return view('website.posts.show', compact('post'));
     }
 
-    public function search(Request $request)
+    public function search(SearchRequest $request)
     {
-        $posts = collect();
-
         if ($request->name != null) {
             $posts = Post::where('title', 'Like', '%' . $request->name . '%')
                 ->orderBy('id', 'desc')->paginate(10);
         }
 
         if ($request->category != null) {
-            $category = Category::where('name', $request->category)->first();
-            $posts = $category ? $category->posts()->orderBy('id', 'desc')->paginate(10) : collect();
-
+            $posts = Category::where('name', $request->category)->first()->posts()->orderBy('id', 'desc')->paginate(10);
         }
 
         if ($request->tag != null) {
-            $tag = Tag::where('name', $request->tag)->first();
-            $posts = $tag ? $tag->posts()->orderBy('id', 'desc')->paginate(10) : collect();
+            $posts = Tag::where('name', $request->tag)->first()->posts()->orderBy('id', 'desc')->paginate(10);
         }
 
-        return view('website.posts.index', compact('posts'));
+        return view('website.posts.index', [
+            "posts" => $posts,
+            "search" => $request->name,
+        ]);
     }
+
+    // public function search(SearchRequest $request)
+    // {
+    //     // dd($request->all());
+    //     $posts = collect();
+
+    //     if ($request->name != null) {
+    //         $posts = Post::where('title', 'Like', '%' . $request->name . '%')
+    //             ->orderBy('id', 'desc')->paginate(10);
+    //     }
+
+    //     if ($request->category != null) {
+    //         $category = Category::where('name', $request->category)->first();
+    //         $posts = $category ? $category->posts()->orderBy('id', 'desc')->paginate(10) : collect();
+
+    //     }
+
+    //     if ($request->tag != null) {
+    //         $tag = Tag::where('name', $request->tag)->first();
+    //         $posts = $tag ? $tag->posts()->orderBy('id', 'desc')->paginate(10) : collect();
+    //     }
+
+    //     return view('website.posts.index', compact('posts'));
+    // }
 }

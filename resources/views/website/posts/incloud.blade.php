@@ -32,11 +32,16 @@
                     @csrf
 
                     @guest
+
+                        @php
+                            $guest = App\Models\Guest::find(Cookie::get('blogGuestId'));
+                        @endphp
+
                         <p class="comment-reply-content">
-                            <input name="name" id="name" class="input-form name" placeholder="Name*" type="text">
+                            <input name="name" id="name" class="input-form name" value="{{ $guest? $guest->name:'' }}" placeholder="Name*" type="text">
                         </p>
                         <p class="comment-reply-content">
-                            <input name="email" id="email" class="input-form email" placeholder="Email*" type="text">
+                            <input name="email" id="email" class="input-form email" value="{{ $guest? $guest->email:'' }}" placeholder="Email*" type="text">
                         </p>
                     @endguest
 

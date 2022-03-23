@@ -42,6 +42,8 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
+        // dd($request->all());
+
         if (Auth::user()) {
             Comment::create([
                 'user_id' => Auth::user()->id,

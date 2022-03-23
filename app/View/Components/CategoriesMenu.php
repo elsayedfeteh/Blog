@@ -26,6 +26,6 @@ class CategoriesMenu extends Component
      */
     public function render()
     {
-        return view('components.categories-menu');
+        return view('website.layouts.components.categories-menu');
     }
 }

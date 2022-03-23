@@ -26,6 +26,6 @@ class TagsMenu extends Component
      */
     public function render()
     {
-        return view('components.tags-menu');
+        return view('website.layouts.components.tags-menu');
     }
 }
