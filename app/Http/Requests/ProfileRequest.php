@@ -27,7 +27,7 @@ class ProfileRequest extends FormRequest
         return [
             'name' => 'required|string|unique:users,name,'. Auth::id(),
             'email' => 'required|email|unique:users,email,'. Auth::id(),
-            'phone' => 'nullable|numeric|max:11',
+            'phone' => 'nullable|numeric',
             'image' => 'nullable|image',
             'description' => 'nullable|string|max:200',
             'gender' => 'nullable|in:male,female',

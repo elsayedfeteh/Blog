@@ -54,7 +54,8 @@ class PostCreateNotification extends Notification
         return new BroadcastMessage([
             'title' => 'New Post Added',
             'body'  => __(":name create a new post the title is :title",['name' => $this->post->user->name, 'title' => $this->post->title]),
-            'url' => "/dashboard/posts/".$this->post->id,
+            'url' => url("/dashboard/posts/".$this->post->id),
+            'url_api' => url("/api/posts/".$this->post->id),
             'time' => $this->post->created_at->diffForHumans(),
         ]);
     }

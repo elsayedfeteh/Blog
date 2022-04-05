@@ -23,11 +23,17 @@ class Post extends Model
      *
      * @return void
      */
-    protected static function booted()
+
+    /*protected static function booted()
     {
         static::addGlobalScope('active', function($builder){
             $builder->where('status', '=', 'active');
         });
+    }*/
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', '=', 'active');
     }
 
     public function user()

@@ -58,7 +58,8 @@ class UserRegisterionNotification extends Notification
         return [
             'title' => __(':name register', ['name' => $this->user->name]),
             'body' => __('the :name need to be blogger in your website', ['name' => $this->user->name]),
-            'url' => '/dashboard/users/'. $this->user->id,
+            'url' => url('/dashboard/users/'. $this->user->id),
+            'url_api' => url('/api/users/'. $this->user->id),
             'icon' => '',
         ];
     }

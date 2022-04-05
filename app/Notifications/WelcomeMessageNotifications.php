@@ -63,6 +63,7 @@ class WelcomeMessageNotifications extends Notification
             "body" => __("Welcome Mr.:name", ['name' => $this->user->name]),
             "icon" => "",
             "url" => url("/dashboard/profile"),
+            "url_api" => url("/api/profile"),
         ];
     }
 }

@@ -54,7 +54,8 @@ class PostChangeStatusNotification extends Notification
         return new BroadcastMessage([
             'title' => 'the admin approve to your post',
             'body'  => "the admin approve to your post ".$this->post->title,
-            'url' => "/dashboard/posts/".$this->post->id,
+            'url' => url("/dashboard/posts/".$this->post->id),
+            'url' => url("/dashboard/posts/".$this->post->id),
             'time' => $this->post->created_at->diffForHumans(),
         ]);
     }
@@ -70,7 +71,8 @@ class PostChangeStatusNotification extends Notification
         return [
             'title' => __('Aprove your poste'),
             'body' => __('the admin aprove your poste (:name)', ['name' => $this->post->title]),
-            'url' => '/dashboard/posts/'.$this->post->id,
+            'url' => url('/dashboard/posts/'.$this->post->id),
+            'url_api' => url('/api/posts/'.$this->post->id),
             'icon' => ''
         ];
     }

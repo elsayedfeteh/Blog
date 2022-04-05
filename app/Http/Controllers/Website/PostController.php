@@ -18,7 +18,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::paginate(5);
+        $posts = Post::active()->paginate(5);
 
         return view('website.posts.index', compact('posts'));
     }
@@ -40,7 +40,7 @@ class PostController extends Controller
     public function search(SearchRequest $request)
     {
         if ($request->name != null) {
-            $posts = Post::where('title', 'Like', '%' . $request->name . '%')
+            $posts = Post::active()->where('title', 'Like', '%' . $request->name . '%')
                 ->orderBy('id', 'desc')->paginate(10);
         }
 
@@ -57,28 +57,4 @@ class PostController extends Controller
             "search" => $request->name,
         ]);
     }
-
-    // public function search(SearchRequest $request)
-    // {
-    //     // dd($request->all());
-    //     $posts = collect();
-
-    //     if ($request->name != null) {
-    //         $posts = Post::where('title', 'Like', '%' . $request->name . '%')
-    //             ->orderBy('id', 'desc')->paginate(10);
-    //     }
-
-    //     if ($request->category != null) {
-    //         $category = Category::where('name', $request->category)->first();
-    //         $posts = $category ? $category->posts()->orderBy('id', 'desc')->paginate(10) : collect();
-
-    //     }
-
-    //     if ($request->tag != null) {
-    //         $tag = Tag::where('name', $request->tag)->first();
-    //         $posts = $tag ? $tag->posts()->orderBy('id', 'desc')->paginate(10) : collect();
-    //     }
-
-    //     return view('website.posts.index', compact('posts'));
-    // }
 }

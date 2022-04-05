@@ -13,6 +13,7 @@ use App\Notifications\PostChangeStatusNotification;
 use App\Notifications\PostCreateNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,9 +29,9 @@ class PostController extends Controller
         $user = Auth::user();
 
         if ($user->type == 'admin') {
-            $posts = Post::orderBy('id', 'desc')->withoutGlobalScope('active')->paginate(5);
+            $posts = Post::orderBy('id', 'desc')->paginate(5);
         } else {
-            $posts = $user->posts()->orderBy('id', 'desc')->withoutGlobalScope('active')->paginate(5);
+            $posts = $user->posts()->orderBy('id', 'desc')->paginate(5);
         }
 
         return view('dashboard.posts.index', compact('posts'));
@@ -38,7 +39,9 @@ class PostController extends Controller
 
     public function changeStatus(Request $request)
     {
-        $post = Post::withoutGlobalScope('active')->find($request->id);
+        Gate::authorize('post.changeStatus');
+
+        $post = Post::find($request->id);
         $user = Auth::user();
 
         if ($post and $post->status == "inactive") {
@@ -127,7 +130,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::withoutGlobalScope('active')->find($id);
+        $post = Post::find($id);
 
         if ($post) {
             return view('dashboard.posts.show', compact('post'));
@@ -144,7 +147,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::withoutGlobalScope('active')->find($id);
+        $post = Post::find($id);
 
         if ($post) {
             return view('dashboard.posts.edit', compact('post'));
@@ -162,7 +165,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, $id)
     {
-        $post = Post::withoutGlobalScope('active')->find($id);
+        $post = Post::find($id);
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -205,7 +208,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::withoutGlobalScope('active')->find($id);
+        $post = Post::find($id);
 
         if ($post) {
             $status = $post->delete();
