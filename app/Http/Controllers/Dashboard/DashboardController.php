@@ -13,7 +13,7 @@ class DashboardController extends Controller
     public function index()
     {
         if(Auth::user()->type == 'admin') {
-            $postsCount = Post::all()->count();
+            $postsCount = Post::all()->count()->sayed;
             $postsInactive = Post::where('status','inactive')->count();
             $usersCount = User::all()->count();
             $userNeedAprove = User::where('type', 'user')->count();
